@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM STELNEO - Gestion Client</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <h2><i class="fas fa-users"></i> CRM STELNEO</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active" data-section="dashboard">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Tableau de bord</span>
+                </li>
+                <li class="nav-item" data-section="clients">
+                    <i class="fas fa-users"></i>
+                    <span>Clients</span>
+                </li>
+                <li class="nav-item" data-section="leads">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Leads</span>
+                </li>
+                <li class="nav-item" data-section="orders">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Commandes</span>
+                </li>
+                <li class="nav-item" data-section="contacts">
+                    <i class="fas fa-address-book"></i>
+                    <span>Contacts</span>
+                </li>
+                <li class="nav-item" data-section="templates">
+                    <i class="fas fa-envelope"></i>
+                    <span>Templates Email</span>
+                </li>
+                <li class="nav-item" data-section="analytics">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Analytics</span>
+                </li>
+                <li class="nav-item" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Paramètres</span>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1 id="page-title">Tableau de bord</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-container">
+                        <input type="text" id="global-search" placeholder="Rechercher clients, contacts...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <button class="btn btn-primary" id="add-new-btn">
+                        <i class="fas fa-plus"></i> Nouveau
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content Sections -->
+            <div class="content">
+                <!-- Dashboard Section -->
+                <section id="dashboard" class="section active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="total-clients">0</h3>
+                                <p>Clients totaux</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="total-leads">0</h3>
+                                <p>Leads actifs</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="total-orders">0</h3>
+                                <p>Commandes ce mois</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-euro-sign"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="total-revenue">0€</h3>
+                                <p>CA ce mois</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-charts">
+                        <div class="chart-container">
+                            <h3>Origine des clients</h3>
+                            <canvas id="clients-origin-chart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <h3>Évolution des ventes</h3>
+                            <canvas id="sales-evolution-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-widgets">
+                        <div class="widget">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Actions à faire</h4>
+                            <div class="widget-content">
+                                <ul class="widget-list" id="todo-list">
+                                    <!-- Todo items will be populated by JavaScript -->
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="widget">
+                            <h4><i class="fas fa-phone"></i> À rappeler</h4>
+                            <div class="widget-content">
+                                <ul class="widget-list" id="callback-list">
+                                    <!-- Callback items will be populated by JavaScript -->
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="widget">
+                            <h4><i class="fas fa-calendar"></i> RDV à venir</h4>
+                            <div class="widget-content">
+                                <ul class="widget-list" id="upcoming-meetings">
+                                    <!-- Upcoming meetings will be populated by JavaScript -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recent-activities">
+                        <h3>Activités récentes</h3>
+                        <div id="recent-activities-list" class="activities-list">
+                            <!-- Activities will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Clients Section -->
+                <section id="clients" class="section">
+                    <div class="section-header">
+                        <h2>Gestion des Clients</h2>
+                        <button class="btn btn-primary" id="add-client-btn">
+                            <i class="fas fa-plus"></i> Nouveau Client
+                        </button>
+                    </div>
+                    <div class="filters">
+                        <select id="client-status-filter">
+                            <option value="">Tous les statuts</option>
+                            <option value="actif">Actif</option>
+                            <option value="inactif">Inactif</option>
+                            <option value="prospect">Prospect</option>
+                        </select>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="clients-table">
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Entreprise</th>
+                                    <th>Email</th>
+                                    <th>Téléphone</th>
+                                    <th>Statut</th>
+                                    <th>Dernier contact</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="clients-tbody">
+                                <!-- Clients will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Leads Section -->
+                <section id="leads" class="section">
+                    <div class="section-header">
+                        <h2>Gestion des Leads</h2>
+                        <button class="btn btn-primary" id="add-lead-btn">
+                            <i class="fas fa-plus"></i> Nouveau Lead
+                        </button>
+                    </div>
+                    <div class="filters">
+                        <select id="lead-source-filter">
+                            <option value="">Toutes les sources</option>
+                            <option value="site-web">Site web</option>
+                            <option value="reseaux-sociaux">Réseaux sociaux</option>
+                            <option value="recommandation">Recommandation</option>
+                            <option value="salon">Salon</option>
+                            <option value="internet">Internet</option>
+                            <option value="autre">Autre</option>
+                        </select>
+                        <select id="lead-priority-filter">
+                            <option value="">Toutes les priorités</option>
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                        <select id="lead-status-filter">
+                            <option value="">Tous les statuts</option>
+                            <option value="à contacter">À contacter</option>
+                            <option value="rdv pris">RDV pris</option>
+                            <option value="prendre rdv">Prendre RDV</option>
+                            <option value="envoyer pochette">Envoyer pochette</option>
+                            <option value="pas intéresser">Pas intéressé</option>
+                            <option value="à rappeler">À rappeler</option>
+                            <option value="appelé à relancer mail">Appelé à relancer mail</option>
+                        </select>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="leads-table">
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Entreprise</th>
+                                    <th>Email</th>
+                                    <th>Source</th>
+                                    <th>Statut</th>
+                                    <th>Priorité</th>
+                                    <th>Service</th>
+                                    <th>Date création</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leads-tbody">
+                                <!-- Leads will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Orders Section -->
+                <section id="orders" class="section">
+                    <div class="section-header">
+                        <h2>Gestion des Commandes</h2>
+                        <button class="btn btn-primary" id="add-order-btn">
+                            <i class="fas fa-plus"></i> Nouvelle Commande
+                        </button>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="orders-table">
+                            <thead>
+                                <tr>
+                                    <th>N° Commande</th>
+                                    <th>Client</th>
+                                    <th>Produit/Emballage</th>
+                                    <th>Quantité</th>
+                                    <th>Prix unitaire</th>
+                                    <th>Total</th>
+                                    <th>Statut</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders-tbody">
+                                <!-- Orders will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Contacts Section -->
+                <section id="contacts" class="section">
+                    <div class="section-header">
+                        <h2>Historique des Contacts</h2>
+                        <button class="btn btn-primary" id="add-contact-btn">
+                            <i class="fas fa-plus"></i> Nouveau Contact
+                        </button>
+                    </div>
+                    <div class="filters">
+                        <select id="contact-type-filter">
+                            <option value="">Tous les types</option>
+                            <option value="appel">Appel</option>
+                            <option value="email">Email</option>
+                            <option value="rdv">Rendez-vous</option>
+                            <option value="autre">Autre</option>
+                        </select>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="contacts-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Client/Lead</th>
+                                    <th>Type</th>
+                                    <th>Sujet</th>
+                                    <th>Résumé</th>
+                                    <th>Utilisateur</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contacts-tbody">
+                                <!-- Contacts will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Email Templates Section -->
+                <section id="templates" class="section">
+                    <div class="section-header">
+                        <h2>Templates d'Emails</h2>
+                        <button class="btn btn-primary" id="add-template-btn">
+                            <i class="fas fa-plus"></i> Nouveau Template
+                        </button>
+                    </div>
+                    <div class="templates-grid" id="templates-grid">
+                        <!-- Templates will be populated by JavaScript -->
+                    </div>
+                </section>
+
+                <!-- Analytics Section -->
+                <section id="analytics" class="section">
+                    <div class="section-header">
+                        <h2>Analytics et Statistiques</h2>
+                    </div>
+                    <div class="analytics-grid">
+                        <div class="chart-container large">
+                            <h3>Performance par mois</h3>
+                            <canvas id="monthly-performance-chart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <h3>Types d'emballages vendus</h3>
+                            <canvas id="packaging-types-chart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <h3>Sources de leads</h3>
+                            <canvas id="lead-sources-chart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Settings Section -->
+                <section id="settings" class="section">
+                    <div class="section-header">
+                        <h2>Paramètres et Outils</h2>
+                    </div>
+                    
+                    <div class="settings-grid">
+                        <div class="settings-card">
+                            <h3><i class="fas fa-download"></i> Sauvegarde des Données</h3>
+                            <p>Exportez toutes vos données pour sauvegarde</p>
+                            <button class="btn btn-primary" onclick="app.exportData()">
+                                <i class="fas fa-download"></i> Exporter les données
+                            </button>
+                        </div>
+
+                        <div class="settings-card">
+                            <h3><i class="fas fa-upload"></i> Import des Données</h3>
+                            <p>Importez des données depuis un fichier de sauvegarde</p>
+                            <input type="file" id="import-file" accept=".json" style="display: none;">
+                            <button class="btn btn-secondary" onclick="document.getElementById('import-file').click()">
+                                <i class="fas fa-upload"></i> Importer des données
+                            </button>
+                        </div>
+
+                        <div class="settings-card">
+                            <h3><i class="fas fa-file-excel"></i> Export Excel</h3>
+                            <p>Générez un rapport Excel de vos leads et clients</p>
+                            <button class="btn btn-success" onclick="app.exportToExcel()">
+                                <i class="fas fa-file-excel"></i> Export Excel
+                            </button>
+                        </div>
+
+                        <div class="settings-card">
+                            <h3><i class="fas fa-bell"></i> Rappels</h3>
+                            <p>Configurez les rappels automatiques</p>
+                            <button class="btn btn-warning" onclick="app.showRemindersSettings()">
+                                <i class="fas fa-bell"></i> Gérer les rappels
+                            </button>
+                        </div>
+
+                        <div class="settings-card">
+                            <h3><i class="fas fa-user"></i> Utilisateur Actuel</h3>
+                            <p>Changez l'utilisateur actuel</p>
+                            <div class="form-group">
+                                <input type="text" id="current-user" placeholder="Nom de l'utilisateur" value="Utilisateur 1">
+                                <button class="btn btn-primary" onclick="app.updateCurrentUser()">
+                                    <i class="fas fa-save"></i> Sauvegarder
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="settings-card">
+                            <h3><i class="fas fa-trash"></i> Nettoyage</h3>
+                            <p>Supprimez toutes les données (attention !)</p>
+                            <button class="btn btn-danger" onclick="app.clearAllData()">
+                                <i class="fas fa-trash"></i> Vider la base
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">Titre</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Modal content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

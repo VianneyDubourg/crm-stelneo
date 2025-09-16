@@ -1,0 +1,31 @@
+{
+  "name": "crm-stelneo",
+  "version": "1.0.0",
+  "description": "CRM complet pour la gestion de clients, leads, commandes et contacts - STELNEO",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve . -l 3000",
+    "build": "echo 'No build step required for static files'",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "crm",
+    "client-management",
+    "sales",
+    "leads",
+    "orders",
+    "emballage",
+    "stelneo"
+  ],
+  "author": "STELNEO",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stelneo/crm.git"
+  },
+  "homepage": "https://crm-stelneo.vercel.app"
+}
