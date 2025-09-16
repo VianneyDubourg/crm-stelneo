@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test CRM STELNEO</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        .test-button {
+            background: #404040;
+            color: #e0e0e0;
+            border: 1px solid #555;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .test-button:hover {
+            background: #555;
+        }
+        .test-result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background: #2d5a2d;
+            border: 1px solid #3d6a3d;
+        }
+        .error {
+            background: #5a2d2d;
+            border: 1px solid #6a3d3d;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test CRM STELNEO</h1>
+    
+    <div>
+        <button class="test-button" onclick="testBasicFunctionality()">Test Fonctionnalité de Base</button>
+        <button class="test-button" onclick="testDataStorage()">Test Stockage des Données</button>
+        <button class="test-button" onclick="testModal()">Test Modal</button>
+        <button class="test-button" onclick="openMainCRM()">Ouvrir CRM Principal</button>
+    </div>
+    
+    <div id="test-results"></div>
+    
+    <script src="data.js"></script>
+    <script>
+        function addTestResult(message, type = 'success') {
+            const resultsDiv = document.getElementById('test-results');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `test-result ${type}`;
+            resultDiv.textContent = message;
+            resultsDiv.appendChild(resultDiv);
+        }
+        
+        function testBasicFunctionality() {
+            addTestResult('Test des fonctionnalités de base...', 'success');
+            
+            try {
+                // Test if data.js is loaded
+                if (typeof CRMData !== 'undefined') {
+                    addTestResult('✓ data.js chargé correctement', 'success');
+                } else {
+                    addTestResult('✗ data.js non chargé', 'error');
+                }
+                
+                // Test if crmData instance exists
+                if (typeof crmData !== 'undefined') {
+                    addTestResult('✓ Instance crmData créée', 'success');
+                } else {
+                    addTestResult('✗ Instance crmData non créée', 'error');
+                }
+                
+                // Test localStorage
+                if (typeof localStorage !== 'undefined') {
+                    addTestResult('✓ localStorage disponible', 'success');
+                } else {
+                    addTestResult('✗ localStorage non disponible', 'error');
+                }
+                
+            } catch (error) {
+                addTestResult('✗ Erreur: ' + error.message, 'error');
+            }
+        }
+        
+        function testDataStorage() {
+            addTestResult('Test du stockage des données...', 'success');
+            
+            try {
+                const data = crmData.getData();
+                addTestResult('✓ Données récupérées: ' + JSON.stringify(data).substring(0, 100) + '...', 'success');
+                
+                // Test adding a client
+                const testClient = {
+                    name: 'Test Client',
+                    company: 'Test Company',
+                    email: 'test@test.com',
+                    phone: '0123456789',
+                    status: 'à contacter',
+                    origin: 'test'
+                };
+                
+                const newClient = crmData.addClient(testClient);
+                addTestResult('✓ Client de test ajouté avec ID: ' + newClient.id, 'success');
+                
+            } catch (error) {
+                addTestResult('✗ Erreur stockage: ' + error.message, 'error');
+            }
+        }
+        
+        function testModal() {
+            addTestResult('Test des modales...', 'success');
+            
+            try {
+                // Create a simple modal
+                const modal = document.createElement('div');
+                modal.id = 'test-modal';
+                modal.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.7);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 9999;
+                `;
+                
+                const modalContent = document.createElement('div');
+                modalContent.style.cssText = `
+                    background: #2d2d2d;
+                    padding: 20px;
+                    border-radius: 10px;
+                    border: 1px solid #404040;
+                `;
+                modalContent.innerHTML = `
+                    <h3 style="color: #e0e0e0; margin-bottom: 15px;">Test Modal</h3>
+                    <p style="color: #888; margin-bottom: 15px;">Cette modale fonctionne !</p>
+                    <button onclick="closeTestModal()" style="background: #404040; color: #e0e0e0; border: 1px solid #555; padding: 8px 16px; border-radius: 5px; cursor: pointer;">Fermer</button>
+                `;
+                
+                modal.appendChild(modalContent);
+                document.body.appendChild(modal);
+                
+                addTestResult('✓ Modal de test créée et affichée', 'success');
+                
+            } catch (error) {
+                addTestResult('✗ Erreur modal: ' + error.message, 'error');
+            }
+        }
+        
+        function closeTestModal() {
+            const modal = document.getElementById('test-modal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+        
+        function openMainCRM() {
+            window.open('index.html', '_blank');
+        }
+        
+        // Auto-run basic test on load
+        window.addEventListener('load', () => {
+            setTimeout(testBasicFunctionality, 500);
+        });
+    </script>
+</body>
+</html>

@@ -7,63 +7,144 @@ class CRMApp {
     }
 
     init() {
-        this.setupEventListeners();
-        this.loadDashboard();
-        this.setupCharts();
+        console.log('Initializing CRM App...');
         
-        // Debug: Test button functionality
-        console.log('CRM App initialized. Available methods:', Object.getOwnPropertyNames(this).filter(name => typeof this[name] === 'function'));
+        // Test if DOM is ready
+        if (document.readyState === 'loading') {
+            console.log('DOM still loading, waiting...');
+            document.addEventListener('DOMContentLoaded', () => {
+                this.initializeApp();
+            });
+        } else {
+            console.log('DOM already loaded, initializing now...');
+            this.initializeApp();
+        }
+    }
+    
+    initializeApp() {
+        console.log('Starting app initialization...');
+        
+        try {
+            this.setupEventListeners();
+            this.loadDashboard();
+            this.setupCharts();
+            
+            // Test basic functionality
+            console.log('CRM App initialized successfully!');
+            console.log('Available methods:', Object.getOwnPropertyNames(this).filter(name => typeof this[name] === 'function'));
+            
+            // Test if we can find basic elements
+            console.log('Dashboard section found:', !!document.getElementById('dashboard'));
+            console.log('Clients section found:', !!document.getElementById('clients'));
+            console.log('Modal overlay found:', !!document.getElementById('modal-overlay'));
+            
+        } catch (error) {
+            console.error('Error during app initialization:', error);
+        }
     }
 
     setupEventListeners() {
+        console.log('Setting up event listeners...');
+        
         // Navigation
-        document.querySelectorAll('.nav-item').forEach(item => {
+        const navItems = document.querySelectorAll('.nav-item');
+        console.log('Found nav items:', navItems.length);
+        
+        navItems.forEach(item => {
             item.addEventListener('click', (e) => {
+                e.preventDefault();
                 const section = e.currentTarget.dataset.section;
+                console.log('Navigating to section:', section);
                 this.navigateToSection(section);
             });
         });
 
         // Global search
-        document.getElementById('global-search').addEventListener('input', (e) => {
-            this.handleGlobalSearch(e.target.value);
-        });
+        const globalSearch = document.getElementById('global-search');
+        if (globalSearch) {
+            globalSearch.addEventListener('input', (e) => {
+                this.handleGlobalSearch(e.target.value);
+            });
+            console.log('Global search listener added');
+        } else {
+            console.error('Global search element not found');
+        }
 
         // Add buttons
-        document.getElementById('add-new-btn').addEventListener('click', () => {
-            this.showAddModal();
-        });
+        const addNewBtn = document.getElementById('add-new-btn');
+        if (addNewBtn) {
+            addNewBtn.addEventListener('click', () => {
+                console.log('Add new button clicked');
+                this.showAddModal();
+            });
+            console.log('Add new button listener added');
+        } else {
+            console.error('Add new button not found');
+        }
 
-        document.getElementById('add-client-btn').addEventListener('click', () => {
-            this.showClientModal();
-        });
+        // Add client button
+        const addClientBtn = document.getElementById('add-client-btn');
+        if (addClientBtn) {
+            addClientBtn.addEventListener('click', () => {
+                console.log('Add client button clicked');
+                this.showClientModal();
+            });
+        }
 
-        document.getElementById('add-lead-btn').addEventListener('click', () => {
-            this.showLeadModal();
-        });
+        // Add lead button
+        const addLeadBtn = document.getElementById('add-lead-btn');
+        if (addLeadBtn) {
+            addLeadBtn.addEventListener('click', () => {
+                console.log('Add lead button clicked');
+                this.showLeadModal();
+            });
+        }
 
-        document.getElementById('add-order-btn').addEventListener('click', () => {
-            this.showOrderModal();
-        });
+        // Add order button
+        const addOrderBtn = document.getElementById('add-order-btn');
+        if (addOrderBtn) {
+            addOrderBtn.addEventListener('click', () => {
+                console.log('Add order button clicked');
+                this.showOrderModal();
+            });
+        }
 
-        document.getElementById('add-contact-btn').addEventListener('click', () => {
-            this.showContactModal();
-        });
+        // Add contact button
+        const addContactBtn = document.getElementById('add-contact-btn');
+        if (addContactBtn) {
+            addContactBtn.addEventListener('click', () => {
+                console.log('Add contact button clicked');
+                this.showContactModal();
+            });
+        }
 
-        document.getElementById('add-template-btn').addEventListener('click', () => {
-            this.showTemplateModal();
-        });
+        // Add template button
+        const addTemplateBtn = document.getElementById('add-template-btn');
+        if (addTemplateBtn) {
+            addTemplateBtn.addEventListener('click', () => {
+                console.log('Add template button clicked');
+                this.showTemplateModal();
+            });
+        }
 
         // Modal close
-        document.querySelector('.modal-close').addEventListener('click', () => {
-            this.closeModal();
-        });
-
-        document.getElementById('modal-overlay').addEventListener('click', (e) => {
-            if (e.target.id === 'modal-overlay') {
+        const modalClose = document.querySelector('.modal-close');
+        if (modalClose) {
+            modalClose.addEventListener('click', () => {
+                console.log('Modal close clicked');
                 this.closeModal();
-            }
-        });
+            });
+        }
+
+        const modalOverlay = document.getElementById('modal-overlay');
+        if (modalOverlay) {
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target.id === 'modal-overlay') {
+                    console.log('Modal overlay clicked');
+                    this.closeModal();
+                }
+            });
+        }
 
         // Filters
         document.getElementById('client-status-filter').addEventListener('change', () => {
@@ -1773,9 +1854,31 @@ class CRMApp {
 
 // Initialize the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM Content Loaded event fired');
     try {
         window.app = new CRMApp();
-        console.log('CRM App initialized successfully');
+        console.log('CRM App instance created successfully');
+        
+        // Test function to verify everything works
+        window.testCRM = function() {
+            console.log('Testing CRM functionality...');
+            if (window.app) {
+                console.log('App instance exists');
+                console.log('Testing showMessage function...');
+                window.app.showMessage('Test message - CRM is working!', 'success');
+                return true;
+            } else {
+                console.error('App instance not found');
+                return false;
+            }
+        };
+        
+        // Auto-test after 1 second
+        setTimeout(() => {
+            console.log('Running auto-test...');
+            window.testCRM();
+        }, 1000);
+        
     } catch (error) {
         console.error('Error initializing CRM App:', error);
     }
