@@ -200,6 +200,26 @@ body {
     font-size: 12px;
 }
 
+.btn-warning {
+    background: #5a4a2d;
+    color: #e0e0e0;
+    border: 1px solid #6a5a3d;
+}
+
+.btn-warning:hover {
+    background: #6a5a3d;
+}
+
+.btn-info {
+    background: #2d4a5a;
+    color: #e0e0e0;
+    border: 1px solid #3d5a6a;
+}
+
+.btn-info:hover {
+    background: #3d5a6a;
+}
+
 /* Content */
 .content {
     flex: 1;
@@ -236,14 +256,15 @@ body {
 }
 
 .stat-card {
-    background: white;
+    background: #2d2d2d;
     padding: 25px;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
     gap: 20px;
     transition: transform 0.3s ease;
+    border: 1px solid #404040;
 }
 
 .stat-card:hover {
@@ -262,30 +283,30 @@ body {
 }
 
 .stat-card:nth-child(1) .stat-icon {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #555;
 }
 
 .stat-card:nth-child(2) .stat-icon {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    background: #666;
 }
 
 .stat-card:nth-child(3) .stat-icon {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    background: #777;
 }
 
 .stat-card:nth-child(4) .stat-icon {
-    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    background: #888;
 }
 
 .stat-content h3 {
     font-size: 2rem;
     font-weight: 700;
-    color: #333;
+    color: #e0e0e0;
     margin-bottom: 5px;
 }
 
 .stat-content p {
-    color: #666;
+    color: #888;
     font-size: 14px;
 }
 
@@ -298,15 +319,16 @@ body {
 }
 
 .chart-container {
-    background: white;
+    background: #2d2d2d;
     padding: 25px;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid #404040;
 }
 
 .chart-container h3 {
     margin-bottom: 20px;
-    color: #333;
+    color: #e0e0e0;
     font-size: 1.2rem;
 }
 
@@ -316,15 +338,16 @@ body {
 
 /* Recent Activities */
 .recent-activities {
-    background: white;
+    background: #2d2d2d;
     padding: 25px;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid #404040;
 }
 
 .recent-activities h3 {
     margin-bottom: 20px;
-    color: #333;
+    color: #e0e0e0;
     font-size: 1.2rem;
 }
 
@@ -335,7 +358,7 @@ body {
 
 .activity-item {
     padding: 15px 0;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #404040;
     display: flex;
     align-items: center;
     gap: 15px;
@@ -362,18 +385,18 @@ body {
 
 .activity-content h4 {
     font-size: 14px;
-    color: #333;
+    color: #e0e0e0;
     margin-bottom: 5px;
 }
 
 .activity-content p {
     font-size: 12px;
-    color: #666;
+    color: #888;
 }
 
 .activity-time {
     font-size: 12px;
-    color: #999;
+    color: #888;
 }
 
 /* Filters */
@@ -386,24 +409,26 @@ body {
 
 .filters select {
     padding: 8px 12px;
-    border: 2px solid #e1e5e9;
+    border: 2px solid #404040;
     border-radius: 6px;
     font-size: 14px;
-    background: white;
+    background: #2d2d2d;
+    color: #e0e0e0;
     cursor: pointer;
 }
 
 .filters select:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #888;
 }
 
 /* Tables */
 .table-container {
-    background: white;
+    background: #2d2d2d;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     overflow: hidden;
+    border: 1px solid #404040;
 }
 
 .data-table {
@@ -412,22 +437,23 @@ body {
 }
 
 .data-table th {
-    background: #f8f9fa;
+    background: #404040;
     padding: 15px;
     text-align: left;
     font-weight: 600;
-    color: #333;
-    border-bottom: 2px solid #e1e5e9;
+    color: #e0e0e0;
+    border-bottom: 2px solid #555;
 }
 
 .data-table td {
     padding: 15px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #404040;
     vertical-align: middle;
+    color: #e0e0e0;
 }
 
 .data-table tr:hover {
-    background-color: #f8f9fa;
+    background-color: #404040;
 }
 
 /* Status badges */
@@ -512,12 +538,13 @@ body {
 }
 
 .template-card {
-    background: white;
+    background: #2d2d2d;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease;
     cursor: pointer;
+    border: 1px solid #404040;
 }
 
 .template-card:hover {
@@ -533,7 +560,7 @@ body {
 
 .template-title {
     font-weight: 600;
-    color: #333;
+    color: #e0e0e0;
 }
 
 .template-actions {
@@ -542,14 +569,15 @@ body {
 }
 
 .template-preview {
-    background: #f8f9fa;
+    background: #1a1a1a;
     padding: 15px;
     border-radius: 6px;
     font-size: 14px;
-    color: #666;
+    color: #888;
     margin-bottom: 15px;
     max-height: 100px;
     overflow: hidden;
+    border: 1px solid #404040;
 }
 
 /* Analytics Grid */
@@ -567,11 +595,12 @@ body {
 }
 
 .settings-card {
-    background: white;
+    background: #2d2d2d;
     padding: 25px;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease;
+    border: 1px solid #404040;
 }
 
 .settings-card:hover {
@@ -579,7 +608,7 @@ body {
 }
 
 .settings-card h3 {
-    color: #333;
+    color: #e0e0e0;
     margin-bottom: 10px;
     font-size: 1.2rem;
     display: flex;
@@ -588,11 +617,11 @@ body {
 }
 
 .settings-card h3 i {
-    color: #667eea;
+    color: #888;
 }
 
 .settings-card p {
-    color: #666;
+    color: #888;
     margin-bottom: 20px;
     font-size: 14px;
 }
@@ -692,14 +721,15 @@ body {
 }
 
 .widget {
-    background: white;
+    background: #2d2d2d;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid #404040;
 }
 
 .widget h4 {
-    color: #333;
+    color: #e0e0e0;
     margin-bottom: 15px;
     display: flex;
     align-items: center;
@@ -707,12 +737,12 @@ body {
 }
 
 .widget h4 i {
-    color: #667eea;
+    color: #888;
 }
 
 .widget-content {
     font-size: 14px;
-    color: #666;
+    color: #888;
 }
 
 .widget-list {
@@ -723,7 +753,7 @@ body {
 
 .widget-list li {
     padding: 8px 0;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #404040;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -763,7 +793,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
     display: none;
     align-items: center;
     justify-content: center;
@@ -775,25 +805,26 @@ body {
 }
 
 .modal {
-    background: white;
+    background: #2d2d2d;
     border-radius: 10px;
     width: 90%;
     max-width: 600px;
     max-height: 80vh;
     overflow-y: auto;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid #404040;
 }
 
 .modal-header {
     padding: 20px 25px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #404040;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .modal-header h3 {
-    color: #333;
+    color: #e0e0e0;
     font-size: 1.3rem;
 }
 
@@ -802,7 +833,7 @@ body {
     border: none;
     font-size: 24px;
     cursor: pointer;
-    color: #999;
+    color: #888;
     padding: 0;
     width: 30px;
     height: 30px;
@@ -812,7 +843,7 @@ body {
 }
 
 .modal-close:hover {
-    color: #333;
+    color: #e0e0e0;
 }
 
 .modal-body {
@@ -828,7 +859,7 @@ body {
     display: block;
     margin-bottom: 8px;
     font-weight: 500;
-    color: #333;
+    color: #e0e0e0;
 }
 
 .form-group input,
@@ -836,17 +867,19 @@ body {
 .form-group textarea {
     width: 100%;
     padding: 10px 12px;
-    border: 2px solid #e1e5e9;
+    border: 2px solid #404040;
     border-radius: 6px;
     font-size: 14px;
     transition: border-color 0.3s ease;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #888;
 }
 
 .form-group textarea {
