@@ -10,6 +10,9 @@ class CRMApp {
         this.setupEventListeners();
         this.loadDashboard();
         this.setupCharts();
+        
+        // Debug: Test button functionality
+        console.log('CRM App initialized. Available methods:', Object.getOwnPropertyNames(this).filter(name => typeof this[name] === 'function'));
     }
 
     setupEventListeners() {
@@ -1021,7 +1024,11 @@ class CRMApp {
     // CRUD Operations
     editClient(id) {
         const client = crmData.getClients().find(c => c.id === id);
-        this.showClientModal(client);
+        if (client) {
+            this.showClientModal(client);
+        } else {
+            console.error('Client not found with id:', id);
+        }
     }
 
     deleteClient(id) {
@@ -1034,7 +1041,11 @@ class CRMApp {
 
     editLead(id) {
         const lead = crmData.getLeads().find(l => l.id === id);
-        this.showLeadModal(lead);
+        if (lead) {
+            this.showLeadModal(lead);
+        } else {
+            console.error('Lead not found with id:', id);
+        }
     }
 
     deleteLead(id) {
@@ -1072,7 +1083,11 @@ class CRMApp {
 
     editOrder(id) {
         const order = crmData.getOrders().find(o => o.id === id);
-        this.showOrderModal(order);
+        if (order) {
+            this.showOrderModal(order);
+        } else {
+            console.error('Order not found with id:', id);
+        }
     }
 
     deleteOrder(id) {
@@ -1085,7 +1100,11 @@ class CRMApp {
 
     editContact(id) {
         const contact = crmData.getContacts().find(c => c.id === id);
-        this.showContactModal(contact);
+        if (contact) {
+            this.showContactModal(contact);
+        } else {
+            console.error('Contact not found with id:', id);
+        }
     }
 
     deleteContact(id) {
@@ -1098,7 +1117,11 @@ class CRMApp {
 
     editTemplate(id) {
         const template = crmData.getEmailTemplates().find(t => t.id === id);
-        this.showTemplateModal(template);
+        if (template) {
+            this.showTemplateModal(template);
+        } else {
+            console.error('Template not found with id:', id);
+        }
     }
 
     deleteTemplate(id) {
@@ -1325,13 +1348,19 @@ class CRMApp {
     }
 
     confirmStatusChange(id, type) {
-        const newStatus = document.getElementById('new-status').value;
+        const newStatus = document.getElementById('new-status');
+        if (!newStatus) {
+            console.error('Status select element not found');
+            return;
+        }
+        
+        const statusValue = newStatus.value;
         
         if (type === 'lead') {
-            crmData.updateLead(id, { status: newStatus });
+            crmData.updateLead(id, { status: statusValue });
             this.loadLeads();
         } else if (type === 'client') {
-            crmData.updateClient(id, { status: newStatus });
+            crmData.updateClient(id, { status: statusValue });
             this.loadClients();
         }
         
@@ -1358,20 +1387,35 @@ class CRMApp {
     }
 
     confirmAddNote(id, type) {
-        const newNote = document.getElementById('new-note').value;
+        const newNoteElement = document.getElementById('new-note');
+        if (!newNoteElement) {
+            console.error('Note textarea element not found');
+            return;
+        }
+        
+        const newNote = newNoteElement.value;
+        if (!newNote.trim()) {
+            this.showMessage('Veuillez saisir une note', 'error');
+            return;
+        }
+        
         const currentDate = new Date().toLocaleDateString('fr-FR');
         const currentUser = crmData.getData().settings.currentUser;
         
         if (type === 'lead') {
             const lead = crmData.getLeads().find(l => l.id === id);
-            const updatedNotes = lead.notes + `\n\n[${currentDate} - ${currentUser}] ${newNote}`;
-            crmData.updateLead(id, { notes: updatedNotes });
-            this.loadLeads();
+            if (lead) {
+                const updatedNotes = (lead.notes || '') + `\n\n[${currentDate} - ${currentUser}] ${newNote}`;
+                crmData.updateLead(id, { notes: updatedNotes });
+                this.loadLeads();
+            }
         } else if (type === 'client') {
             const client = crmData.getClients().find(c => c.id === id);
-            const updatedNotes = client.notes + `\n\n[${currentDate} - ${currentUser}] ${newNote}`;
-            crmData.updateClient(id, { notes: updatedNotes });
-            this.loadClients();
+            if (client) {
+                const updatedNotes = (client.notes || '') + `\n\n[${currentDate} - ${currentUser}] ${newNote}`;
+                crmData.updateClient(id, { notes: updatedNotes });
+                this.loadClients();
+            }
         }
         
         this.closeModal();
@@ -1413,9 +1457,18 @@ class CRMApp {
     }
 
     confirmQuickContact(clientId) {
-        const type = document.getElementById('contact-type-quick').value;
-        const subject = document.getElementById('contact-subject-quick').value;
-        const summary = document.getElementById('contact-summary-quick').value;
+        const typeElement = document.getElementById('contact-type-quick');
+        const subjectElement = document.getElementById('contact-subject-quick');
+        const summaryElement = document.getElementById('contact-summary-quick');
+        
+        if (!typeElement || !subjectElement || !summaryElement) {
+            console.error('Contact form elements not found');
+            return;
+        }
+        
+        const type = typeElement.value;
+        const subject = subjectElement.value;
+        const summary = summaryElement.value;
         
         if (!subject || !summary) {
             this.showMessage('Veuillez remplir tous les champs obligatoires', 'error');
@@ -1423,6 +1476,11 @@ class CRMApp {
         }
 
         const client = crmData.getClients().find(c => c.id === clientId);
+        if (!client) {
+            console.error('Client not found with id:', clientId);
+            return;
+        }
+        
         const contactData = {
             clientId: clientId,
             clientName: client.name,
@@ -1568,7 +1626,13 @@ class CRMApp {
     }
 
     confirmOrderStatusChange(id) {
-        const newStatus = document.getElementById('new-order-status').value;
+        const newStatusElement = document.getElementById('new-order-status');
+        if (!newStatusElement) {
+            console.error('Order status select element not found');
+            return;
+        }
+        
+        const newStatus = newStatusElement.value;
         crmData.updateOrder(id, { status: newStatus });
         this.closeModal();
         this.showMessage('Statut de commande mis à jour !', 'success');
@@ -1709,5 +1773,10 @@ class CRMApp {
 
 // Initialize the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    window.app = new CRMApp();
+    try {
+        window.app = new CRMApp();
+        console.log('CRM App initialized successfully');
+    } catch (error) {
+        console.error('Error initializing CRM App:', error);
+    }
 });
